@@ -46,12 +46,15 @@
   <!-- 🎉 Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-  <!-- 🔐 Password, Confetti & Typing Logic -->
+  <!-- ✅ WORKING JS -->
   <script>
-    const birthdayMessage = `Firstly, thankyou babe for being with me in every moment of my life ❤🤗✨. Eppudu illane kalisi undham 💑… Entha mandhi ochina, our bond is unbreakable 🔗❤.
-       Kopam ochina kuda,aa disturbances lekunda,without ego manam malli kallisipodham 🙏🫂. Health jagratha,and I wish for great success.Iddaram oka manchi position ki veltham💪. 
-       Eppudu ala navvuthu undu 😊💖. All the best for everything. I’m with you forever ♾… I love you (M❤P).Once again, Happy Birthday my girl 🎉🎂!`
-      ;
+    const birthdayMessage = `Firstly, thank you babe for being with me in every moment of my life ❤🤗✨. 
+Eppudu illane kalisi undham 💑… Entha mandhi ochina, our bond is unbreakable 🔗❤.
+Kopam ochina kuda, aa disturbances lekunda, without ego manam malli kallisipodham 🙏🫂. 
+Health jagratha, and I wish for great success. Iddaram oka manchi position ki veltham 💪. 
+Eppudu ala navvuthu undu 😊💖. All the best for everything. 
+I’m with you forever ♾… I love you (M❤P). 
+Once again, Happy Birthday my girl 🎉🎂!`;
 
     function launchConfetti() {
       confetti({
@@ -64,6 +67,7 @@
     function typeMessage(msg, elementId, speed = 30) {
       let i = 0;
       const target = document.getElementById(elementId);
+      target.innerHTML = "";
       function type() {
         if (i < msg.length) {
           target.innerHTML += msg.charAt(i);
