@@ -8,13 +8,10 @@
       background: #fff5f8;
       text-align: center;
       padding: 40px;
-      overflow: hidden;
     }
     #wish {
       display: none;
       color: #e91e63;
-      position: relative;
-      z-index: 1;
     }
     img {
       max-width: 250px;
@@ -27,48 +24,10 @@
       font-size: 16px;
       margin: 10px;
     }
-    #typed {
-      font-size: 18px;
-      white-space: pre-line;
-    }
-
-    /* 💖 Floating Hearts */
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: #ff4d6d;
-      transform: rotate(45deg);
-      animation: floatHearts 6s linear infinite;
-    }
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: #ff4d6d;
-      border-radius: 50%;
-    }
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-    .heart::after {
-      top: 0;
-      left: -10px;
-    }
-    @keyframes floatHearts {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-600px) scale(1.5);
-        opacity: 0;
-      }
-    }
   </style>
+
+  <!-- 🎉 Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
@@ -80,76 +39,84 @@
   <div id="wish">
     <h1>🎉 Happy Birthday, My Girl! 🎂</h1>
     <img src="puji.jpg" alt="Birthday Girl">
-    <p id="typed"></p>
+    <p>
+      Firstly, thank you babe for being with me in every moment of my life ❤️🔐💫.<br>
+      Eppudu illane kalisi undham 💞. Entha mandhi ochina our bond is unbreakble, kopam ochina kuda,<br>
+      aa disturbances lekunda, without ego manam malli kallisipodham 🙏🌸.<br>
+      Health jagratha, and I wish for great Success.<br>
+      Eppudu ala navvuthu undu 😍🌟.<br>
+      I'm with you forever ♾️. I love you (M❤️P).<br>
+      Once again, Happy Birthday! 🎂
+    </p>
   </div>
 
-  <!-- 🎶 Background Music -->
-  <audio id="bgMusic" src="romantic-piano-solo-334668.mp3" preload="auto" loop></audio>
-
-  <!-- 🎉 Confetti Library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <!-- 🔊 Background music -->
+  <audio id="bg-music" src="romantic-piano-solo-334668.mp3" loop></audio>
 
   <script>
-    const birthdayMessage = `Firstly, thank you babe for being with me in every moment of my life ❤🤗✨. 
-Eppudu illane kalisi undham 💑… Entha mandhi ochina, our bond is unbreakable 🔗❤.
-Kopam ochina kuda, aa disturbances lekunda, without ego manam malli kallisipodham 🙏🫂. 
-Health jagratha, and I wish for great success. Iddaram oka manchi position ki veltham 💪. 
-Eppudu ala navvuthu undu 😊💖. All the best for everything. 
-I’m with you forever ♾… I love you (M❤P). 
-Once again, Happy Birthday my girl 🎉🎂!`;
-
+    // Confetti animation
     function launchConfetti() {
-      confetti({
-        particleCount: 150,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    }
+      const duration = 5 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 2000 };
 
-    function typeMessage(msg, elementId, speed = 30) {
-      let i = 0;
-      const target = document.getElementById(elementId);
-      target.innerHTML = "";
-      function type() {
-        if (i < msg.length) {
-          target.innerHTML += msg.charAt(i);
-          i++;
-          setTimeout(type, speed);
-        }
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
       }
-      type();
+
+      const interval = setInterval(function () {
+        const timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) return clearInterval(interval);
+
+        confetti({
+          ...defaults,
+          particleCount: 50,
+          origin: {
+            x: randomInRange(0.1, 0.9),
+            y: Math.random() - 0.2
+          }
+        });
+      }, 250);
     }
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
+    // Typing effect
+    function typeMessage(text) {
+      const container = document.createElement('p');
+      container.style.fontSize = '18px';
+      container.style.color = '#e91e63';
+      document.getElementById('wish').appendChild(container);
+
+      let i = 0;
+      const interval = setInterval(() => {
+        container.textContent += text.charAt(i);
+        i++;
+        if (i > text.length) clearInterval(interval);
+      }, 40);
     }
 
+    // Password check
     function checkPassword() {
       const correctPassword = "PM143";
       const userPassword = document.getElementById("password").value;
+
       if (userPassword === correctPassword) {
         document.getElementById("wish").style.display = "block";
         launchConfetti();
-        typeMessage(birthdayMessage, "typed");
-        setInterval(createHeart, 400);
+        typeMessage("💖 You’ve unlocked a memory made with love! 🎂");
 
-        const music = document.getElementById("bgMusic");
+        const music = document.getElementById("bg-music");
         if (music) {
           music.volume = 0;
-          music.play().catch(() => console.warn("Autoplay blocked"));
+          music.play().catch(() => {});
           let fade = setInterval(() => {
             if (music.volume < 0.9) {
-              music.volume += 0.1;
+              music.volume += 0.05;
             } else {
               clearInterval(fade);
             }
           }, 300);
         }
+
       } else {
         alert("Oops! Wrong password 😅");
       }
