@@ -84,7 +84,7 @@
     }
   </style>
 
-  <!-- 🎉 Confetti library -->
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -99,9 +99,9 @@
     <img src="puji.jpg" alt="Birthday Girl">
     <p>
       Firstly, thank you babe for being with me in every moment of my life ❤️🔐💫.<br>
-      Eppudu illane kalisi undham 💞. Entha mandhi ochina unbreakble bond manadhi, kopam ochina kuda,<br>
+      Eppudu illane kalisi undham 💞. Entha mandhi ochina unbreakblebond manadhi, kopam ochina kuda,<br>
       aa disturbances lekunda, without ego manam malli kallisipodham 🙏🌸.<br>
-      Health jagratha, and I wish for great Success always.<br>
+      Health jagratha, and I wish for great happiness always.<br>
       Eppudu ala navvuthu undu 😍🌟.<br>
       I'm with you forever ♾️. I love you (M❤️P).<br>
       Once again, Happy Birthday! 🎂
@@ -109,11 +109,9 @@
     <p id="typed-message"></p>
   </div>
 
-  <!-- 🔊 Background music -->
   <audio id="bg-music" src="romantic-piano-solo-334668.mp3" preload="auto" loop></audio>
 
   <script>
-    // Confetti
     function launchConfetti() {
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
@@ -138,7 +136,6 @@
       }, 250);
     }
 
-    // Floating hearts
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -147,30 +144,27 @@
       setTimeout(() => heart.remove(), 6000);
     }
 
-    // Typing message
-    function typeMessage(message, elementId) {
-      const element = document.getElementById(elementId);
+    function typeMessage(message) {
+      const element = document.getElementById("typed-message");
+      element.textContent = ''; // clear previous
       let index = 0;
       const interval = setInterval(() => {
         element.textContent += message.charAt(index);
         index++;
         if (index >= message.length) clearInterval(interval);
-      }, 50);
+      }, 40);
     }
 
     function checkPassword() {
       const correctPassword = "PM143";
-      const userPassword = document.getElementById("password").value;
+      const entered = document.getElementById("password").value;
 
-      if (userPassword === correctPassword) {
+      if (entered === correctPassword) {
         document.getElementById("wish").style.display = "block";
-
-        // Effects
         launchConfetti();
         setInterval(createHeart, 300);
-        typeMessage("💖 You’ve unlocked a memory made with love! 🎂", "typed-message");
+        typeMessage("💖 You’ve unlocked a memory made with love! 🎂");
 
-        // Music play (with small delay for mobile)
         setTimeout(() => {
           const music = document.getElementById("bg-music");
           if (music) {
@@ -184,7 +178,7 @@
               }
             }, 300);
           }
-        }, 300); // slight delay to ensure works on mobile
+        }, 300);
 
       } else {
         alert("Oops! Wrong password 😅");
