@@ -8,21 +8,67 @@
       background: #fff5f8;
       text-align: center;
       padding: 40px;
+      overflow: hidden;
     }
+
     #wish {
       display: none;
       color: #e91e63;
+      position: relative;
+      z-index: 2;
     }
+
     img {
       max-width: 250px;
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       margin: 20px 0;
     }
+
     input, button {
       padding: 10px;
       font-size: 16px;
       margin: 10px;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: floatUp 6s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px) rotate(45deg);
+        opacity: 0;
+      }
     }
   </style>
 
@@ -43,7 +89,7 @@
       Firstly, thank you babe for being with me in every moment of my life ❤️🔐💫.<br>
       Eppudu illane kalisi undham 💞. Entha mandhi ochina our bond is unbreakble, kopam ochina kuda,<br>
       aa disturbances lekunda, without ego manam malli kallisipodham 🙏🌸.<br>
-      Health jagratha, and I wish for great Success.<br>
+      Health jagratha, and I wish for great Success always.<br>
       Eppudu ala navvuthu undu 😍🌟.<br>
       I'm with you forever ♾️. I love you (M❤️P).<br>
       Once again, Happy Birthday! 🎂
@@ -53,8 +99,10 @@
   <!-- 🔊 Background music -->
   <audio id="bg-music" src="romantic-piano-solo-334668.mp3" loop></audio>
 
+  <!-- 💖 Heart Container -->
+  <div id="hearts-container"></div>
+
   <script>
-    // Confetti animation
     function launchConfetti() {
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
@@ -79,7 +127,6 @@
       }, 250);
     }
 
-    // Typing effect
     function typeMessage(text) {
       const container = document.createElement('p');
       container.style.fontSize = '18px';
@@ -94,7 +141,18 @@
       }, 40);
     }
 
-    // Password check
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
     function checkPassword() {
       const correctPassword = "PM143";
       const userPassword = document.getElementById("password").value;
@@ -117,6 +175,7 @@
           }, 300);
         }
 
+        setInterval(createHeart, 300);
       } else {
         alert("Oops! Wrong password 😅");
       }
