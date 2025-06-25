@@ -43,10 +43,12 @@
     <p id="typed"></p>
   </div>
 
+  <!-- 🎶 Background Music -->
+  <audio id="bgMusic" src="love-music.mp3" preload="auto" loop></audio>
+
   <!-- 🎉 Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-  <!-- ✅ WORKING JS -->
   <script>
     const birthdayMessage = `Firstly, thank you babe for being with me in every moment of my life ❤🤗✨. 
 Eppudu illane kalisi undham 💑… Entha mandhi ochina, our bond is unbreakable 🔗❤.
@@ -85,6 +87,13 @@ Once again, Happy Birthday my girl 🎉🎂!`;
         document.getElementById("wish").style.display = "block";
         launchConfetti();
         typeMessage(birthdayMessage, "typed");
+
+        const music = document.getElementById("bgMusic");
+        if (music) {
+          music.play().catch(() => {
+            console.warn("Autoplay blocked by browser.");
+          });
+        }
       } else {
         alert("Oops! Wrong password 😅");
       }
