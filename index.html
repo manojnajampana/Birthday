@@ -32,12 +32,14 @@
     }
 
     .heart {
-      position: absolute;
+      position: fixed;
       width: 20px;
       height: 20px;
       background: red;
       transform: rotate(45deg);
-      animation: floatUp 6s linear infinite;
+      animation: floatUp 6s linear forwards;
+      opacity: 0.8;
+      z-index: 1;
     }
 
     .heart::before,
@@ -62,13 +64,23 @@
 
     @keyframes floatUp {
       0% {
-        transform: translateY(0) rotate(45deg);
+        bottom: -20px;
+        opacity: 0;
+      }
+      50% {
         opacity: 1;
       }
       100% {
-        transform: translateY(-800px) rotate(45deg);
+        bottom: 100%;
         opacity: 0;
       }
+    }
+
+    #typed-message {
+      font-size: 18px;
+      color: #e91e63;
+      margin-top: 20px;
+      white-space: pre-wrap;
     }
   </style>
 
@@ -87,22 +99,21 @@
     <img src="puji.jpg" alt="Birthday Girl">
     <p>
       Firstly, thank you babe for being with me in every moment of my life ❤️🔐💫.<br>
-      Eppudu illane kalisi undham 💞. Entha mandhi ochina our bond is unbreakble, kopam ochina kuda,<br>
+      Eppudu illane kalisi undham 💞. Entha mandhi ochina our bond unbreakble, kopam ochina kuda,<br>
       aa disturbances lekunda, without ego manam malli kallisipodham 🙏🌸.<br>
-      Health jagratha, and I wish for great Success always.<br>
+      Health jagratha, and I wish for great happiness always.<br>
       Eppudu ala navvuthu undu 😍🌟.<br>
       I'm with you forever ♾️. I love you (M❤️P).<br>
       Once again, Happy Birthday! 🎂
     </p>
+    <p id="typed-message"></p>
   </div>
 
   <!-- 🔊 Background music -->
   <audio id="bg-music" src="romantic-piano-solo-334668.mp3" loop></audio>
 
-  <!-- 💖 Heart Container -->
-  <div id="hearts-container"></div>
-
   <script>
+    // 🎉 Confetti
     function launchConfetti() {
       const duration = 5 * 1000;
       const animationEnd = Date.now() + duration;
@@ -112,7 +123,7 @@
         return Math.random() * (max - min) + min;
       }
 
-      const interval = setInterval(function () {
+      const interval = setInterval(() => {
         const timeLeft = animationEnd - Date.now();
         if (timeLeft <= 0) return clearInterval(interval);
 
@@ -127,60 +138,42 @@
       }, 250);
     }
 
-    function typeMessage(text) {
-      const container = document.createElement('p');
-      container.style.fontSize = '18px';
-      container.style.color = '#e91e63';
-      document.getElementById('wish').appendChild(container);
-
-      let i = 0;
-      const interval = setInterval(() => {
-        container.textContent += text.charAt(i);
-        i++;
-        if (i > text.length) clearInterval(interval);
-      }, 40);
-    }
-
+    // ❤️ Floating hearts
     function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * 100 + "vw";
       document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+      setTimeout(() => heart.remove(), 6000);
     }
 
+    // ✍️ Typing effect
+    function typeMessage(message, elementId) {
+      const element = document.getElementById(elementId);
+      let index = 0;
+      const interval = setInterval(() => {
+        element.textContent += message.charAt(index);
+        index++;
+        if (index >= message.length) clearInterval(interval);
+      }, 50);
+    }
+
+    // 🔐 Unlock and trigger effects
     function checkPassword() {
       const correctPassword = "PM143";
       const userPassword = document.getElementById("password").value;
 
       if (userPassword === correctPassword) {
         document.getElementById("wish").style.display = "block";
-        launchConfetti();
-        typeMessage("💖 You’ve unlocked a memory made with love! 🎂");
 
+        // Launch all animations
+        launchConfetti();
+        setInterval(createHeart, 300);
+        typeMessage("💖 You’ve unlocked a memory made with love! 🎂", "typed-message");
+
+        // Play music
         const music = document.getElementById("bg-music");
         if (music) {
           music.volume = 0;
           music.play().catch(() => {});
           let fade = setInterval(() => {
-            if (music.volume < 0.9) {
-              music.volume += 0.05;
-            } else {
-              clearInterval(fade);
-            }
-          }, 300);
-        }
-
-        setInterval(createHeart, 300);
-      } else {
-        alert("Oops! Wrong password 😅");
-      }
-    }
-  </script>
-
-</body>
-</html>
