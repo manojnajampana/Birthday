@@ -81,10 +81,11 @@
       color: #e91e63;
       margin-top: 20px;
       white-space: pre-wrap;
+      line-height: 1.6;
     }
   </style>
 
-  <!-- Confetti -->
+  <!-- 🎉 Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
@@ -95,11 +96,11 @@
   <button onclick="checkPassword()">Unlock</button>
 
   <div id="wish">
-    <h1>🎉 Happy Birthday, My Girl! 🎂</h1>
+    <h1>🎉 Happy Birthday, Puji! 🎂</h1>
     <img src="puji.jpg" alt="Birthday Girl">
     <p>
       Firstly, thank you babe for being with me in every moment of my life ❤️🔐💫.<br>
-      Eppudu illane kalisi undham 💞. Entha mandhi ochina unbreakblebond manadhi, kopam ochina kuda,<br>
+      Eppudu illane kalisi undham 💞. Entha mandhi ochina our bond unbreakble, kopam ochina kuda,<br>
       aa disturbances lekunda, without ego manam malli kallisipodham 🙏🌸.<br>
       Health jagratha, and I wish for great happiness always.<br>
       Eppudu ala navvuthu undu 😍🌟.<br>
@@ -109,6 +110,7 @@
     <p id="typed-message"></p>
   </div>
 
+  <!-- 🔊 Background music -->
   <audio id="bg-music" src="romantic-piano-solo-334668.mp3" preload="auto" loop></audio>
 
   <script>
@@ -146,7 +148,7 @@
 
     function typeMessage(message) {
       const element = document.getElementById("typed-message");
-      element.textContent = ''; // clear previous
+      element.textContent = '';
       let index = 0;
       const interval = setInterval(() => {
         element.textContent += message.charAt(index);
@@ -163,7 +165,7 @@
         document.getElementById("wish").style.display = "block";
         launchConfetti();
         setInterval(createHeart, 300);
-        typeMessage("💖 You’ve unlocked a memory made with love! 🎂");
+        typeMessage("💌 Puji... You are my everything.\n\nEvery moment with you is a gift.\nI promise to be with you through every smile, every tear, and every birthday ahead. 💖\n\nI love you forever.\n– Manojna 💕");
 
         setTimeout(() => {
           const music = document.getElementById("bg-music");
