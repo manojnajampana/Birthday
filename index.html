@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Puji</title>
+  <title>Happy Birthday Surprise 🎉</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -24,6 +24,10 @@
       font-size: 16px;
       margin: 10px;
     }
+    #typed {
+      font-size: 18px;
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
@@ -35,21 +39,47 @@
 
   <div id="wish">
     <h1>🎉 Happy Birthday, My Girl! 🎂</h1>
-    <img src="puji.jpg" alt="Birthday Girl" style="max-width: 250px; border-radius: 12px;">
-    <p>Firstly, thankyou babe for being with me in every moment of my life ❤️🤗✨. Eppudu illane kalisi undham 💑… Entha mandhi ochina, our bond is unbreakable 🔗❤️.
-       Kopam ochina kuda,aa disturbances lekunda,without ego manam malli kallisipodham 🙏🫂. Health jagratha,and I wish for great success.Iddaram oka manchi position ki veltham💪. 
-       Eppudu ala navvuthu undu 😊💖. All the best for everything. I’m with you forever ♾️… I love you (M❤️P).Once again, Happy Birthday my girl 🎉🎂🎈👑!
-      
-    </p>
-    <p>From,ur Girl❤️</p>
+    <img src="puji.jpg" alt="Birthday Girl">
+    <p id="typed"></p>
   </div>
 
+  <!-- 🎉 Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <!-- 🔐 Password, Confetti & Typing Logic -->
   <script>
+    const birthdayMessage = `Firstly, thankyou babe for being with me in every moment of my life ❤🤗✨. Eppudu illane kalisi undham 💑… Entha mandhi ochina, our bond is unbreakable 🔗❤.
+       Kopam ochina kuda,aa disturbances lekunda,without ego manam malli kallisipodham 🙏🫂. Health jagratha,and I wish for great success.Iddaram oka manchi position ki veltham💪. 
+       Eppudu ala navvuthu undu 😊💖. All the best for everything. I’m with you forever ♾… I love you (M❤P).Once again, Happy Birthday my girl 🎉🎂! ;
+
+    function launchConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function typeMessage(msg, elementId, speed = 30) {
+      let i = 0;
+      const target = document.getElementById(elementId);
+      function type() {
+        if (i < msg.length) {
+          target.innerHTML += msg.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        }
+      }
+      type();
+    }
+
     function checkPassword() {
-      const correctPassword = "PM";  // 🔐 Change this to your chosen password
+      const correctPassword = "cutie123";
       const userPassword = document.getElementById("password").value;
       if (userPassword === correctPassword) {
         document.getElementById("wish").style.display = "block";
+        launchConfetti();
+        typeMessage(birthdayMessage, "typed");
       } else {
         alert("Oops! Wrong password 😅");
       }
@@ -58,4 +88,3 @@
 
 </body>
 </html>
-
